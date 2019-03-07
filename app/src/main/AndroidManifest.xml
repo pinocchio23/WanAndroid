@@ -47,6 +47,7 @@
             android:launchMode="singleTask"/>
 
         <activity android:name=".ui.activity.ContentActivity"/>
+        <activity android:name=".ui.activity.SearchActivity"/>
 
         <receiver android:name=".receiver.NetworkChangeReceiver" />
     </application>

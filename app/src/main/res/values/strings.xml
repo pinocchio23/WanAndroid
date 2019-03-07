@@ -27,5 +27,6 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="no_account">没有账号？去注册</string>
+    <string name="action_search">搜索</string>
 
 </resources>

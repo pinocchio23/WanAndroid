@@ -1,8 +1,12 @@
 package wtaps.op.madness.ui.activity
 
+import android.content.Intent
 import android.support.design.bottomnavigation.LabelVisibilityMode.*
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.jetbrains.anko.startActivity
 import wtaps.op.madness.R
 import wtaps.op.madness.base.BaseActivity
 import wtaps.op.madness.mvp.contract.MainContract
@@ -14,7 +18,7 @@ import wtaps.op.madness.ui.fragment.HomeFragment
  *    date   : 2018\11\19 0019
  */
 
-class MainActivity : BaseActivity(), MainContract.View{
+class MainActivity : BaseActivity(), MainContract.View {
 
     private val BOTTOM_INDEX: String = "bottom_index"
 
@@ -26,7 +30,7 @@ class MainActivity : BaseActivity(), MainContract.View{
 
     private var mIndex = FRAGMENT_HOME
 
-    private var mHomeFragment : HomeFragment? = null
+    private var mHomeFragment: HomeFragment? = null
 
 
     override fun showError(msg: String) {
@@ -61,17 +65,34 @@ class MainActivity : BaseActivity(), MainContract.View{
         showFragment(mIndex)
     }
 
-    private fun showFragment(index: Int){
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_layout_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.R_id_menu_search -> {
+                Intent(this, SearchActivity::class.java).run {
+                    startActivity(this)
+                }
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showFragment(index: Int) {
         val transaction = supportFragmentManager.beginTransaction()
-        when(index){
+        when (index) {
             FRAGMENT_HOME
             -> {
                 toolbar.title = "首页"
-                if(mHomeFragment == null){
+                if (mHomeFragment == null) {
                     mHomeFragment = HomeFragment.getInstance()
                     transaction.add(R.id.container, mHomeFragment!!, "home")
-                }else{
-                    mHomeFragment?.let { transaction.show(it)}
+                } else {
+                    mHomeFragment?.let { transaction.show(it) }
                 }
             }
         }
